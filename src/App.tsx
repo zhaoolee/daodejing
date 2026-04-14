@@ -17,6 +17,7 @@ const defaultChapterId = 1
 const minFontSize = 19
 const maxFontSize = 25
 const defaultFontSize = 21
+const githubRepoUrl = 'https://github.com/zhaoolee/daodejing'
 
 function getChapterIdFromHash() {
   const matched = window.location.hash.match(/chapter-(\d+)/)
@@ -106,10 +107,7 @@ function App() {
     : locale === 'zh'
       ? '已是最后一章'
       : 'Last Chapter'
-  const sourceLabel =
-    locale === 'zh' ? '内容整理来源：daodejing.org' : 'English translation: Stephen Mitchell'
-  const sourceLinkLabel = locale === 'zh' ? '查看当前章节来源页面' : 'View English source'
-  const sourceHref = locale === 'zh' ? activeChapter.sourceUrl : 'https://wamoyo.github.io/tao-te-ching/'
+  const sourceLabel = locale === 'zh' ? '内容整理来源：daodejing.org' : 'Source: Tao Te Ching English rendering'
 
   const goToChapter = (chapterId: number) => {
     setMobileToolsOpen(false)
@@ -283,19 +281,20 @@ function App() {
             </div>
 
             <footer className="sheet-footer">
-              <span className="sheet-footer-icon" aria-hidden="true">
-                <svg viewBox="0 0 32 32" role="img" focusable="false">
-                  <circle cx="16" cy="16" r="16" />
-                  <text x="50%" y="50%">
-                    道
-                  </text>
+              <a
+                href={githubRepoUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="sheet-footer-icon-link"
+                aria-label="在 GitHub 查看开源仓库"
+                title="GitHub 开源地址"
+              >
+                <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
+                  <path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.08 3.29 9.39 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.19-.02-2.16-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.78 1.2 1.78 1.2 1.03 1.78 2.71 1.27 3.37.97.1-.75.4-1.27.72-1.56-2.55-.29-5.23-1.29-5.23-5.72 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.16 1.19a10.9 10.9 0 0 1 5.76 0c2.19-1.5 3.16-1.19 3.16-1.19.62 1.59.23 2.77.11 3.06.73.81 1.18 1.85 1.18 3.11 0 4.44-2.69 5.42-5.25 5.71.41.35.77 1.04.77 2.1 0 1.52-.01 2.75-.01 3.13 0 .31.21.68.8.56a11.52 11.52 0 0 0 7.85-10.9C23.5 5.66 18.35.5 12 .5Z" />
                 </svg>
-              </span>
+              </a>
               <span className="sheet-footer-copy">
                 <span className="sheet-footer-brand">{sourceLabel}</span>
-                <a href={sourceHref} target="_blank" rel="noreferrer" className="sheet-footer-via">
-                  {sourceLinkLabel}
-                </a>
               </span>
             </footer>
           </div>

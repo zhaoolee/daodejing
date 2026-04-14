@@ -559,12 +559,13 @@ button:disabled {
   position: relative;
   z-index: 1;
   margin-top: 48px;
-  padding: 30px 20px 12px;
+  padding: 36px 20px 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   font-size: 0.78rem;
   line-height: 1.25;
+  flex-wrap: wrap;
 }
 
 .sheet-footer-copy {
@@ -573,6 +574,7 @@ button:disabled {
   align-items: baseline;
   gap: 6px;
   min-width: 0;
+  flex: 1 1 240px;
 }
 
 .sheet-footer-brand {
@@ -584,29 +586,28 @@ button:disabled {
   color: #ac9070;
 }
 
-.sheet-footer-icon {
-  display: block;
+.sheet-footer-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 16px;
   height: 16px;
   flex: 0 0 auto;
+  color: #9d8467;
+  text-decoration: none;
+  transition: color 160ms ease, transform 160ms ease;
 }
 
-.sheet-footer-icon svg {
+.sheet-footer-icon-link:hover {
+  color: #6f583f;
+  transform: translateY(-1px);
+}
+
+.sheet-footer-icon-link svg {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-.sheet-footer-icon circle {
-  fill: #d9d0c3;
-}
-
-.sheet-footer-icon text {
-  fill: #fefcf6;
-  font-size: 13px;
-  font-family: var(--ui-font);
-  text-anchor: middle;
-  dominant-baseline: middle;
+  fill: currentColor;
 }
 
 @media (min-width: 960px) {
@@ -863,11 +864,13 @@ button:disabled {
 
   .sheet-footer {
     margin-top: 26px;
-    padding: 28px 10px 6px;
+    padding: 34px 10px 6px;
     line-height: 1.45;
+    gap: 8px;
   }
 
   .sheet-footer-copy {
-    margin-top: 6px;
+    margin-top: 0;
+    flex: 1 1 auto;
   }
 }
