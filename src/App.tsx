@@ -35,6 +35,12 @@ function splitParagraphs(text: string) {
     .filter(Boolean)
 }
 
+function stripAnnotationMarkers(text: string) {
+  return text
+    .replace(/[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿⒀⒁⒂⒃⒄⒅⒆⒇]/g, '')
+    .replace(/\[\d+\]/g, '')
+}
+
 function App() {
   const [activeChapterId, setActiveChapterId] = useState(defaultChapterId)
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -239,7 +245,7 @@ function App() {
               <article className="note-section">
                 <header className="note-index">{originalLabel}</header>
                 <div className="note-copy note-copy--original">
-                  {splitParagraphs(activeChapter.original).map((paragraph, index) => (
+                  {splitParagraphs(stripAnnotationMarkers(activeChapter.original)).map((paragraph, index) => (
                     <p key={`${activeChapter.id}-original-${index}`}>{paragraph}</p>
                   ))}
                 </div>

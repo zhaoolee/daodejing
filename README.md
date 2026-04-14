@@ -8,6 +8,12 @@
 - 大字号原文 + 译文并排阅读（桌面端）
 - 可直接发布到 GitHub Pages
 
+## 在线访问
+
+已部署地址：
+
+- https://zhaoolee.com/daodejing
+
 ## 本地开发
 
 ```bash
@@ -24,24 +30,20 @@ npm run preview
 
 ## 发布到 GitHub Pages
 
-### 方案 1：手动发布（最简单）
+推荐使用 GitHub Actions 自动发布，项目已内置：
 
-把仓库推到 GitHub 后执行：
+- `.github/workflows/deploy.yml`
+- 线上地址：https://zhaoolee.com/daodejing
+
+仓库推送到 `main` 后会自动触发部署。
+
+如果你想手动发布，也可以执行：
 
 ```bash
 npm run deploy
 ```
 
-这会把 `dist/` 发布到 `gh-pages` 分支。
-
-### 方案 2：自动发布（推荐）
-
-项目已内置 `.github/workflows/deploy.yml`。
-
-1. 将仓库推送到 GitHub 的 `main` 分支
-2. 在仓库设置里启用 GitHub Pages
-3. 选择 `GitHub Actions` 作为部署来源
-4. 以后每次 push 到 `main` 都会自动发布
+手动发布会把 `dist/` 发布到 `gh-pages` 分支。
 
 ## 内容来源
 
