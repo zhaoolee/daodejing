@@ -48,14 +48,22 @@ function App() {
   const [mobileToolsOpen, setMobileToolsOpen] = useState(false)
   const [fontSize, setFontSize] = useState(defaultFontSize)
   const [locale, setLocale] = useState<'zh' | 'en'>('zh')
+  const [theme, setTheme] = useState<'default' | 'smartisan-dark'>('default')
+  const [themeAnimating, setThemeAnimating] = useState(false)
 
   useEffect(() => {
     const storedFontSize = window.localStorage.getItem('daodejing-font-size')
     const parsed = storedFontSize ? Number(storedFontSize) : Number.NaN
     const storedLocale = window.localStorage.getItem('daodejing-locale')
+    const storedTheme = window.localStorage.getItem('daodejing-theme')
 
     if (storedLocale === 'zh' || storedLocale === 'en') {
       setLocale(storedLocale)
+    }
+
+    if (storedTheme === 'smartisan-dark') {
+      setTheme(storedTheme)
+      document.documentElement.dataset.theme = storedTheme
     }
 
     if (!Number.isNaN(parsed)) {
@@ -81,6 +89,11 @@ function App() {
   useEffect(() => {
     window.localStorage.setItem('daodejing-locale', locale)
   }, [locale])
+
+  useEffect(() => {
+    window.localStorage.setItem('daodejing-theme', theme)
+    document.documentElement.dataset.theme = theme === 'smartisan-dark' ? 'smartisan-dark' : ''
+  }, [theme])
 
   const activeChapter = useMemo(
     () => chapterList.find((chapter) => chapter.id === activeChapterId) ?? chapterList[0],
@@ -178,11 +191,22 @@ function App() {
               <button type="button" className="chrome-button" onClick={decreaseFontSize}>
                 A-
               </button>
-              <span>{fontSize}px</span>
               <button type="button" className="chrome-button" onClick={increaseFontSize}>
                 A+
               </button>
             </div>
+            <button
+              type="button"
+              className={`chrome-button theme-toggle ${themeAnimating ? 'theme-toggle--animating' : ''}`}
+              onClick={() => {
+                setThemeAnimating(true)
+                setTheme((t) => (t === 'default' ? 'smartisan-dark' : 'default'))
+                setTimeout(() => setThemeAnimating(false), 500)
+              }}
+              aria-label={theme === 'smartisan-dark' ? '切换为浅色模式' : '切换为深色模式'}
+            >
+              {theme === 'smartisan-dark' ? '☀' : '☾'}
+            </button>
           </div>
         </div>
 
@@ -193,7 +217,6 @@ function App() {
               <button type="button" className="chrome-button" onClick={decreaseFontSize}>
                 A-
               </button>
-              <span>{fontSize}px</span>
               <button type="button" className="chrome-button" onClick={increaseFontSize}>
                 A+
               </button>
@@ -212,8 +235,14 @@ function App() {
                 onClick={() => goToChapter(chapter.id)}
                 type="button"
               >
-                <span className="chapter-link__name">
-                  {locale === 'zh' ? chapter.chapter : `Chapter ${chapter.id}`}
+                <span className="chapter-link__index">{chapter.id}</span>
+                <span className="chapter-link__body">
+                  <span className="chapter-link__name">
+                    {locale === 'zh' ? chapter.chapter : `Chapter ${chapter.id}`}
+                  </span>
+                  <span className="chapter-link__preview">
+                    {stripAnnotationMarkers(chapter.original).slice(0, 20)}
+                  </span>
                 </span>
               </button>
             ))}
